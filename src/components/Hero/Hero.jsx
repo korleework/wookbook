@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import BiryaniImg1 from "../../assets/burger/chicken.png";
 import BiryaniImg2 from "../../assets/burger/mara.png";
 import BiryaniImg3 from "../../assets/burger/kimchi.jpg";
 import Vector from "../../assets/vector.png";
+import OrderPage from "../Order/OrderPage";
 
 const ImageList = [
   {
@@ -21,6 +22,7 @@ const ImageList = [
 
 const Hero = () => {
   const [imageId, setImageId] = React.useState(BiryaniImg1);
+  const [showOrder, setShowOrder] = useState(false);
 
   const bgImage = {
     backgroundImage: `url(${Vector})`,
@@ -29,6 +31,10 @@ const Hero = () => {
     backgroundSize: "cover",
     height: "100%",
     width: "100%",
+  };
+
+  const handleOrderClick = () => {
+    setShowOrder(!showOrder);
   };
 
   return (
@@ -46,7 +52,7 @@ const Hero = () => {
                 >
                   {" "}
                   <span
-                    class="bg-clip-text text-transparent bg-gradient-to-b from-primary to-secondary drop-shadow-[4px_4px_0_rgba(255, 255, 255,1)] "
+                    className="bg-clip-text text-transparent bg-gradient-to-b from-primary to-secondary drop-shadow-[4px_4px_0_rgba(255, 255, 255,1)] "
                     style={{
                       filter: "drop-shadow(4px 4px 0 rgba(255, 255, 255,1))",
                     }}
@@ -62,7 +68,10 @@ const Hero = () => {
                 상황에 맞게 원하는 대로 골라 주문해보세요!
                 </p>
                 <div data-aos="fade-up" data-aos-delay="300">
-                  <button className="bg-gradient-to-r from-primary to-white hover:scale-105 duration-200 text-black font-bold py-2 px-4 rounded-full border-2 border-white">
+                  <button 
+                    className="bg-gradient-to-r from-primary to-white hover:scale-105 duration-200 text-black font-bold py-2 px-4 rounded-full border-2 border-white"
+                    onClick={handleOrderClick}
+                  >
                     지금 바로 주문
                   </button>
                 </div>
@@ -78,9 +87,8 @@ const Hero = () => {
                 </div>
                 <div className="flex lg:flex-col lg:top-1/2 lg:-translate-y-1/2 lg:py-2 justify-center gap-4 absolute bottom-[-30px] lg:-right-10 bg-white/30 rounded-full">
                   {ImageList.map((item) => (
-                    <div data-aos="zoom-in" data-aos-offset="0">
+                    <div data-aos="zoom-in" data-aos-offset="0" key={item.id}>
                       <img
-                        key={item.id}
                         src={item.img}
                         onClick={() => {
                           setImageId(
@@ -99,6 +107,8 @@ const Hero = () => {
                 </div>
               </div>
             </div>
+            {/* Conditionally render the OrderPage component */}
+            {showOrder && <OrderPage />}
           </div>
         </div>
       </div>
